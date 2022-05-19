@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'dashboard_scren.dart';
+
+import 'login_screen.dart';
 
 class DisplayScreen extends StatefulWidget {
   const DisplayScreen({ Key? key }) : super(key: key);
@@ -20,7 +21,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
   _navigatetohome() async{
     await Future.delayed(Duration(milliseconds: 1500),() {});
     Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
+      context, MaterialPageRoute(builder: (context)=>LoginScreen()));
   }
 
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
     return Scaffold(
       body:Center(
         child: Container(
-          color: Colors.green,
+          // color: Colors.green,
           height: height,
           width: width,
           child: Image.asset('assets/images/tlogo.png',fit: BoxFit.fill),
