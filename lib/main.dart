@@ -12,11 +12,10 @@ void main() {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        // '/': (context) => const DisplayScreen(),
-        '/': (context) => const RegisterScreen(),
+        '/': (context) => const DisplayScreen(),
         '/dashboard':(context) => const DashboardScreen(),
         '/login':(context) => const LoginScreen(),
-        // '/register':(context) => const RegisterScreen(),
+        '/register':(context) => const RegisterScreen(),
 
       },
     ),

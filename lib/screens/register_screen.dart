@@ -17,7 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             Expanded(
-              flex: 5,
+              flex: 10,
               child: SizedBox(
                 child: Container(
                   child: Image.asset('assets/images/tlogo.png',fit: BoxFit.cover,),
@@ -30,6 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   children: [
                     Container(
+                      margin: EdgeInsets.fromLTRB(8, 0, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
                           labelText: 'Name',
@@ -39,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     Container(
+                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
                           labelText: 'Username',
@@ -48,6 +50,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     Container(
+                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Enter Email',
+                          border: OutlineInputBorder()
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
                           labelText:'Pasword',
@@ -55,6 +68,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           border: OutlineInputBorder()
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        margin: EdgeInsets.all(8),
+                        child: ElevatedButton(
+                          child: const Text('Register'),
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/login');
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: TextButton(
+                        onPressed: (){
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: const Text('Already have n ccount? Login')
+                      ),
+
                     )
                   ],
                 ),

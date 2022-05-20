@@ -25,13 +25,12 @@ class _DisplayScreenState extends State<DisplayScreen> {
   }
 
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body:Center(
         child: Container(
           // color: Colors.green,
-          height: height,
+          
           width: width,
           child: Image.asset('assets/images/tlogo.png',fit: BoxFit.fill),
         ),
