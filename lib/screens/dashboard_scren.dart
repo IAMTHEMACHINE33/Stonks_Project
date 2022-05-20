@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../models/Dashboard_model.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({ Key? key }) : super(key: key);
@@ -8,6 +11,15 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+late List<Data> _chartData;
+late TooltipBehavior _tooltipBehavior;
+  
+  @override
+  void initState() {
+    _chartData = getChartData;
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
      return Scaffold(
@@ -57,13 +69,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                   )
-
                 ],
               )
             ),
             Expanded(
               flex:30,
-              child: Container(),
+              child: Container(
+                child: SfCircularChart(
+                  legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
+                  series: <CircularSeries>[
+                    PieSeries<Data, String>(
+                      dataSource: _chartData,
+                      xValueMapper: (Data data, _)=>data.sector,
+                      yValueMapper: (Data data, _)=>data.holding,
+                      dataLabelSettings: DataLabelSettings(isVisible: true,),
+                      enableTooltip: true
+                    )
+                  ],
+                ),
+              ),
             ),
             Expanded(
               flex: 3,
@@ -100,5 +124,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       )
     );
+  }
+  List<Data> get getChartData{
+    final List<Data> chartData = [
+      Data("Commercial Banks",20),
+      Data('Deveopment Banks',30),
+      Data('Hydropower',10),
+      Data('Microfinance',20),
+      Data('Agriculture Banks',10),
+      Data('Finance',10),
+    ];
+    return chartData;
   }
 }

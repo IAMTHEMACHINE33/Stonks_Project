@@ -19,7 +19,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
   }
   
   _navigatetohome() async{
-    await Future.delayed(Duration(milliseconds: 1500),() {});
+    await Future.delayed(Duration(milliseconds: 2500),() {});
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context)=>LoginScreen()));
   }
