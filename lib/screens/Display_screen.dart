@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_management/screens/bottom_navigation_bar.dart';
+import 'package:portfolio_management/screens/login_screen.dart';
 
 
-import 'login_screen.dart';
+
 
 class DisplayScreen extends StatefulWidget {
   const DisplayScreen({ Key? key }) : super(key: key);

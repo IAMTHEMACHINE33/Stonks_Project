@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
                             child: ElevatedButton(
                               onPressed: (){
-                                Navigator.pushNamed(context, '/dashboard');
+                                Navigator.pushNamed(context, '/nav');
                               },
                                child: const Text('Login')
                                ),

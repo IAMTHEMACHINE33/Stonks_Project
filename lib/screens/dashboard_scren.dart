@@ -112,14 +112,6 @@ late TooltipBehavior _tooltipBehavior;
                   );
                 }),
             ),
-            Expanded(
-              flex: 10,
-              child: Row(
-                children: [
-                  Container()
-                ],
-              ),
-            ),
           ],
         ),
       )
