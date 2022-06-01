@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -10,6 +11,22 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  File? img;
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          img = File(image.path);
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint('Failed to pick Image $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +34,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             Expanded(
-              flex: 10,
-              child: SizedBox(
-                child: Container(
-                  child: Image.asset('assets/images/tlogo.png',fit: BoxFit.cover,),
+              flex: 7,
+              child: Container(
+                child: Image.asset(
+                  'assets/images/tlogo.png',
+                  fit: BoxFit.fill,
                 ),
               ),
+            ),
+            Expanded(
+              flex: 8,
+              child: InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                                title: const Text("Upload Image"),
+                                actions: [
+                                  TextButton(
+                                    child: const Text("Open Camera"),
+                                    onPressed: () {
+                                      _loadImage(ImageSource.camera);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text("Open Gallery"),
+                                    onPressed: () {
+                                      _loadImage(ImageSource.gallery);
+                                    },
+                                  )
+                                ]));
+                  },
+                  child: _displayImage()),
             ),
             Expanded(
               flex: 20,
@@ -30,52 +73,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(8, 0, 8, 2),
+                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                          labelText: 'Name',
-                          hintText: 'Enter Name',
-                          border: OutlineInputBorder()
-                        ),
+                            labelText: 'Name',
+                            hintText: 'Enter Name',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                          labelText: 'Username',
-                          hintText: 'Enter Username',
-                          border: OutlineInputBorder()
-                        ),
+                            labelText: 'Username',
+                            hintText: 'Enter Username',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'Enter Email',
-                          border: OutlineInputBorder()
-                        ),
+                            labelText: 'Email',
+                            hintText: 'Enter Email',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                          labelText:'Pasword',
-                          hintText: '*******',
-                          border: OutlineInputBorder()
-                        ),
+                            labelText: 'Pasword',
+                            hintText: '*******',
+                            border: OutlineInputBorder()),
                       ),
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: Container(
-                        margin: EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                           child: const Text('Register'),
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.pushNamed(context, '/login');
                           },
                         ),
@@ -83,23 +122,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(
                       child: TextButton(
-                        onPressed: (){
-                          Navigator.pushNamed(context, '/login');
-                        },
-                        child: const Text('Already have n ccount? Login')
-                      ),
-
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
+                          child: const Text('Already have n ccount? Login')),
                     )
                   ],
                 ),
               ),
             ),
-            Expanded(
-              flex: 5,
+            const Expanded(
+              flex: 0,
               child: SizedBox(),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _displayImage() {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: img == null
+            ? Image.network(
+                'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
+                fit: BoxFit.fill,
+                // height: MediaQuery.of(context).size.height * 2,
+                // width: double.infinity * 0.2,
+              )
+            : Image.file(img!),
       ),
     );
   }
