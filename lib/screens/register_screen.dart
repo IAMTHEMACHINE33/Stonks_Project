@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:portfolio_management/repository/user_repository.dart';
+import 'package:portfolio_management/utils/show_message.dart';
+
+import '../models/user.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -11,6 +15,31 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _firstnameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  _register(User user) async {
+    bool isSignup = await UserRepository().register(user);
+    if (isSignup) {
+      _displayMessage(true);
+    } else {
+      _displayMessage(false);
+    }
+  }
+
+  _displayMessage(bool isSignup) {
+    if (isSignup) {
+      displaySuccessMessage(context, "Register Success");
+    } else {
+      displayErrorMessage(context, "Registor Failed");
+    }
+  }
+
   File? img;
   Future _loadImage(ImageSource imageSource) async {
     try {
@@ -70,64 +99,101 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Expanded(
               flex: 20,
               child: Form(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 2),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Name',
-                            hintText: 'Enter Name',
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Username',
-                            hintText: 'Enter Username',
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Email',
-                            hintText: 'Enter Email',
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Pasword',
-                            hintText: '*******',
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          child: const Text('Register'),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/login');
-                          },
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _firstnameController,
+                          decoration: const InputDecoration(
+                              labelText: 'Firstname',
+                              hintText: 'Enter Firstname',
+                              border: OutlineInputBorder()),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/login');
-                          },
-                          child: const Text('Already have n ccount? Login')),
-                    )
-                  ],
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _lastnameController,
+                          decoration: const InputDecoration(
+                              labelText: 'Lastname',
+                              hintText: 'Enter Lastname',
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _ageController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Age',
+                              hintText: 'Enter Age'),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                              labelText: 'Username',
+                              hintText: 'Enter Username',
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                              labelText: 'Email',
+                              hintText: 'Enter Email',
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                              labelText: 'Pasword',
+                              hintText: '*******',
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Container(
+                          margin: const EdgeInsets.all(8),
+                          child: ElevatedButton(
+                            child: const Text('Register'),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                User user = User(
+                                  address: _firstnameController.text,
+                                  country: _lastnameController.text,
+                                  username: _usernameController.text,
+                                  phone: _ageController.text,
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                );
+                                _register(user);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/login');
+                            },
+                            child: const Text('Already have n ccount? Login')),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
