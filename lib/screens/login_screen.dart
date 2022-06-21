@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   _navigateToScreen(bool isLogin) {
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       UserRepository userRepository = UserRepository();
       bool isLogin = await userRepository.login(
-        _usernameController.text,
+        _emailController.text,
         _passwordController.text,
       );
       if (isLogin) {
@@ -45,65 +45,66 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              flex: 17,
-              child: SizedBox(
-                  child: Container(
-                child: Image.asset('assets/images/tlogo.png', fit: BoxFit.fill),
-              )),
-            ),
+            SizedBox(
+                height: 200,
+                child: SizedBox(
+                  child:
+                      Image.asset('assets/images/tlogo.png', fit: BoxFit.fill),
+                )),
             Expanded(
               flex: 20,
-              child: SizedBox(
-                child: Container(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(8, 0, 8, 4),
-                          child: TextFormField(
-                            controller: _usernameController,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              hintText: 'email@email.com',
-                              border: OutlineInputBorder(),
+              child: SingleChildScrollView(
+                child: IntrinsicHeight(
+                  child: Container(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+                            child: TextFormField(
+                              controller: _emailController,
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
+                                hintText: 'email@email.com',
+                                border: OutlineInputBorder(),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
-                          child: TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                                labelText: 'Password',
-                                hintText: '********',
-                                border: OutlineInputBorder()),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                  labelText: 'Password',
+                                  hintText: '********',
+                                  border: OutlineInputBorder()),
+                            ),
                           ),
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text('Forget Password?')),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _login();
-                                  }
-                                },
-                                child: const Text('Login')),
+                          TextButton(
+                              onPressed: () {},
+                              child: const Text('Forget Password?')),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _login();
+                                    }
+                                  },
+                                  child: const Text('Login')),
+                            ),
                           ),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/register');
-                            },
-                            child: const Text('New User? Register'))
-                      ],
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/register');
+                              },
+                              child: const Text('New User? Register'))
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:portfolio_management/screens/profile_screen.dart';
 
 import 'Trend_screen.dart';
 import 'dashboard_scren.dart';
@@ -8,7 +8,8 @@ class BottomNavigationBarScreen extends StatefulWidget {
   const BottomNavigationBarScreen({Key? key}) : super(key: key);
 
   @override
-  State<BottomNavigationBarScreen> createState() => _BottomNavigationBarScreenState();
+  State<BottomNavigationBarScreen> createState() =>
+      _BottomNavigationBarScreenState();
 }
 
 class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
@@ -16,10 +17,10 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
 
   List<Widget> lstWidget = [
     const DashboardScreen(),
-    const TrendScreen()
+    const TrendScreen(),
+    const ProfileScreen()
   ];
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,30 +28,21 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
         child: lstWidget[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items:const [
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
+              icon: Icon(Icons.fireplace_outlined), label: 'Trends'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.fireplace_outlined),
-            label: 'Trends'
-          ),
+              icon: Icon(Icons.add_chart_outlined), label: 'Stats'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_chart_outlined),
-            label: 'Stats'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account'
-          )
+              icon: Icon(Icons.account_circle), label: 'Account')
         ],
         backgroundColor: Colors.amber[100],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
         elevation: 10,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });

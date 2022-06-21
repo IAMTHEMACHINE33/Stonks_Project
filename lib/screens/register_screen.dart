@@ -172,10 +172,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 User user = User(
-                                  address: _firstnameController.text,
-                                  country: _lastnameController.text,
+                                  firstname: _firstnameController.text,
+                                  lastname: _lastnameController.text,
                                   username: _usernameController.text,
-                                  phone: _ageController.text,
+                                  age: _ageController.text,
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                 );

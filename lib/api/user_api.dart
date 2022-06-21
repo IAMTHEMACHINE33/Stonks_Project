@@ -26,7 +26,7 @@ class UserApi {
     return isSignup;
   }
 
-  Future<bool> login(String username, String password) async {
+  Future<bool> login(String email, String password) async {
     bool isLogin = false;
     try {
       var url = baseUrl + loginUrl;
@@ -35,7 +35,7 @@ class UserApi {
       var response = await dio.post(
         url,
         data: {
-          "username": username,
+          "email": email,
           "password": password,
         },
       );
