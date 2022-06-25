@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_management/api/http_services.dart';
+import 'package:portfolio_management/response/load_user_response.dart';
 import 'package:portfolio_management/response/login_response.dart';
 import 'package:portfolio_management/utils/url.dart';
 
@@ -48,5 +49,24 @@ class UserApi {
       debugPrint(e.toString());
     }
     return isLogin;
+  }
+
+  Future<LoadUserResponse?> loadUser() async {
+    Future.delayed(const Duration(seconds: 2), () {});
+    LoadUserResponse? loadUserResponse;
+    try {
+      var dio = HttpServices().getDioInstance();
+      var url = baseUrl + getUserUrl;
+
+      Response response = await dio.get(url);
+      if (response.statusCode == 201) {
+        loadUserResponse = LoadUserResponse.fromJson(response.data);
+      } else {
+        loadUserResponse = null;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+    return loadUserResponse;
   }
 }

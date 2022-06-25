@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_management/screens/Stats_screen.dart';
 import 'package:portfolio_management/screens/profile_screen.dart';
 
 import 'Trend_screen.dart';
@@ -18,6 +19,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   List<Widget> lstWidget = [
     const DashboardScreen(),
     const TrendScreen(),
+    const StatsScreen(),
     const ProfileScreen()
   ];
 
