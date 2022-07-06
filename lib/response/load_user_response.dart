@@ -1,20 +1,33 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:portfolio_management/response/load_user_data.dart';
 
 part 'load_user_response.g.dart';
 
 @JsonSerializable()
 class LoadUserResponse {
-  bool? success;
-  List<LoadUserData>? data;
+  @JsonKey(name: "firstname")
+  String? firstname;
+
+  @JsonKey(name: "lastname")
+  String? lastname;
+
+  @JsonKey(name: "username")
+  String? username;
+
+  @JsonKey(name: "age")
+  String? age;
+
+  @JsonKey(name: "email")
+  String? email;
 
   LoadUserResponse({
-    this.success,
-    this.data,
+    this.firstname,
+    this.lastname,
+    this.username,
+    this.age,
+    this.email,
   });
 
   factory LoadUserResponse.fromJson(Map<String, dynamic> json) =>
       _$LoadUserResponseFromJson(json);
-
   Map<String, dynamic> toJson() => _$LoadUserResponseToJson(this);
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_management/api/http_services.dart';
@@ -51,22 +53,27 @@ class UserApi {
     return isLogin;
   }
 
-  Future<LoadUserResponse?> loadUser() async {
+  Future<LoadUserResponse?> loadUsers() async {
     Future.delayed(const Duration(seconds: 2), () {});
     LoadUserResponse? loadUserResponse;
+    var url = baseUrl + getUserUrl;
+    var dio = HttpServices().getDioInstance();
     try {
-      var dio = HttpServices().getDioInstance();
-      var url = baseUrl + getUserUrl;
-
-      Response response = await dio.get(url);
-      if (response.statusCode == 201) {
+      Response response = await dio.get(url,
+          options: Options(
+              headers: {HttpHeaders.authorizationHeader: "Bearer $token"}));
+      if (response.statusCode == 200) {
+        // debugPrint(response.data.toString());
         loadUserResponse = LoadUserResponse.fromJson(response.data);
       } else {
-        loadUserResponse = null;
+        debugPrint("nah");
+        // loadUserResponse = null;
       }
     } catch (e) {
       throw Exception(e);
     }
+
+    debugPrint(loadUserResponse.toString());
     return loadUserResponse;
   }
 }

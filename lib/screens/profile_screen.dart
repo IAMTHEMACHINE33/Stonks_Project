@@ -79,24 +79,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             margin: const EdgeInsets.all(8),
             child: Column(
-              children: const [
-                ListTile(
+              children: [
+                const ListTile(
                   leading: Icon(Icons.lock_outline_rounded),
                   title: Text("Privacy"),
                   subtitle: Text("Change profile settings"),
                   trailing: Icon(Icons.arrow_forward_ios),
                 ),
                 ListTile(
-                    leading: Icon(Icons.notifications_on),
-                    title: Text("Notification"),
-                    subtitle: Text("Change notification settings"),
-                    trailing: Icon(Icons.arrow_forward_ios)),
-                ListTile(
+                  leading: const Icon(Icons.notifications_on),
+                  title: const Text("Notification"),
+                  subtitle: const Text("Change notification settings"),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    setState(() {
+                      Navigator.pushNamed(context, '/aboutus');
+                    });
+                  },
+                ),
+                const ListTile(
                     leading: Icon(Icons.group),
                     title: Text("About Us"),
                     subtitle: Text("Know about the app"),
                     trailing: Icon(Icons.arrow_forward_ios)),
-                ListTile(
+                const ListTile(
                     leading: Icon(Icons.logout_rounded),
                     title: Text("Logout"),
                     subtitle: Text("Sign out from tha app"),

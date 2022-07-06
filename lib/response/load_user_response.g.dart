@@ -8,14 +8,18 @@ part of 'load_user_response.dart';
 
 LoadUserResponse _$LoadUserResponseFromJson(Map<String, dynamic> json) =>
     LoadUserResponse(
-      success: json['success'] as bool?,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => LoadUserData.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      firstname: json['firstname'] as String?,
+      lastname: json['lastname'] as String?,
+      username: json['username'] as String?,
+      age: json['age'] as String?,
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$LoadUserResponseToJson(LoadUserResponse instance) =>
     <String, dynamic>{
-      'success': instance.success,
-      'data': instance.data,
+      'firstname': instance.firstname,
+      'lastname': instance.lastname,
+      'username': instance.username,
+      'age': instance.age,
+      'email': instance.email,
     };

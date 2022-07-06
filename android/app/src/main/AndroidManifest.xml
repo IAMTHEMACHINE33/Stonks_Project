@@ -4,6 +4,10 @@
         android:label="portfolio_management"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAv9msdc0cx9NN8vBRCRZW7g8XqlQY3kpc"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

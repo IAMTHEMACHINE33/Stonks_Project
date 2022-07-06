@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_management/repository/user_repository.dart';
 import 'package:portfolio_management/utils/show_message.dart';
@@ -10,12 +11,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  _checkNotificationEnabled() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   _navigateToScreen(bool isLogin) {
     if (isLogin) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 1,
+              channelKey: 'basic_channel',
+              title: 'Login Successful',
+              body: 'This is to notify login success'));
       Navigator.pushNamed(context, '/nav');
     } else {
       displayErrorMessage(context, 'Either username or password is incorrect');
@@ -37,6 +52,12 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       displayErrorMessage(context, "Error:${e.toString()}");
     }
+  }
+
+  @override
+  void initState() {
+    _checkNotificationEnabled();
+    super.initState();
   }
 
   @override
@@ -63,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             margin: const EdgeInsets.fromLTRB(8, 0, 8, 4),
                             child: TextFormField(
+                              key: const ValueKey('txtEmail'),
                               controller: _emailController,
                               decoration: const InputDecoration(
                                 labelText: 'Email',
@@ -74,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             margin: const EdgeInsets.fromLTRB(8, 4, 8, 0),
                             child: TextFormField(
+                              key: const ValueKey('txtPassword'),
                               controller: _passwordController,
                               obscureText: true,
                               decoration: const InputDecoration(
@@ -90,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Container(
                               margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                               child: ElevatedButton(
+                                  key: const ValueKey('btnLogin'),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       _login();

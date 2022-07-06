@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:portfolio_management/repository/user_repository.dart';
 import 'package:portfolio_management/utils/show_message.dart';
 
@@ -27,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     bool isSignup = await UserRepository().register(user);
     if (isSignup) {
       _displayMessage(true);
+      Navigator.pushNamed(context, 'login');
     } else {
       _displayMessage(false);
     }
@@ -40,21 +38,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  File? img;
-  Future _loadImage(ImageSource imageSource) async {
-    try {
-      final image = await ImagePicker().pickImage(source: imageSource);
-      if (image != null) {
-        setState(() {
-          img = File(image.path);
-        });
-      } else {
-        return;
-      }
-    } catch (e) {
-      debugPrint('Failed to pick Image $e');
-    }
-  }
+  // File? img;
+  // Future _loadImage(ImageSource imageSource) async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: imageSource);
+  //     if (image != null) {
+  //       setState(() {
+  //         img = File(image.path);
+  //       });
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Failed to pick Image $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,31 +69,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 8,
-              child: InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                                title: const Text("Upload Image"),
-                                actions: [
-                                  TextButton(
-                                    child: const Text("Open Camera"),
-                                    onPressed: () {
-                                      _loadImage(ImageSource.camera);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: const Text("Open Gallery"),
-                                    onPressed: () {
-                                      _loadImage(ImageSource.gallery);
-                                    },
-                                  )
-                                ]));
-                  },
-                  child: _displayImage()),
-            ),
+            // Expanded(
+            //   flex: 8,
+            //   child: InkWell(
+            //       onTap: () {
+            //         showDialog(
+            //             context: context,
+            //             builder: (context) => AlertDialog(
+            //                     title: const Text("Upload Image"),
+            //                     actions: [
+            //                       TextButton(
+            //                         child: const Text("Open Camera"),
+            //                         onPressed: () {
+            //                           _loadImage(ImageSource.camera);
+            //                         },
+            //                       ),
+            //                       TextButton(
+            //                         child: const Text("Open Gallery"),
+            //                         onPressed: () {
+            //                           _loadImage(ImageSource.gallery);
+            //                         },
+            //                       )
+            //                     ]));
+            //       },
+            //       child: _displayImage()),
+            // ),
             Expanded(
               flex: 20,
               child: Form(
@@ -106,6 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtFirstname'),
                           controller: _firstnameController,
                           decoration: const InputDecoration(
                               labelText: 'Firstname',
@@ -116,6 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtLastname'),
                           controller: _lastnameController,
                           decoration: const InputDecoration(
                               labelText: 'Lastname',
@@ -126,6 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtAge'),
                           controller: _ageController,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
@@ -136,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtUsername'),
                           controller: _usernameController,
                           decoration: const InputDecoration(
                               labelText: 'Username',
@@ -146,6 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtEmail'),
                           controller: _emailController,
                           decoration: const InputDecoration(
                               labelText: 'Email',
@@ -156,6 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                         child: TextFormField(
+                          key: const ValueKey('txtPassword'),
                           controller: _passwordController,
                           decoration: const InputDecoration(
                               labelText: 'Pasword',
@@ -168,6 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Container(
                           margin: const EdgeInsets.all(8),
                           child: ElevatedButton(
+                            key: const ValueKey('btnRegister'),
                             child: const Text('Register'),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
@@ -207,20 +212,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _displayImage() {
-    return Container(
-      margin: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
-        child: img == null
-            ? Image.network(
-                'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
-                fit: BoxFit.fill,
-                // height: MediaQuery.of(context).size.height * 2,
-                // width: double.infinity * 0.2,
-              )
-            : Image.file(img!),
-      ),
-    );
-  }
+  // Widget _displayImage() {
+  //   return Container(
+  //     margin: const EdgeInsets.all(8.0),
+  //     child: ClipRRect(
+  //       borderRadius: BorderRadius.circular(18),
+  //       child: img == null
+  //           ? Image.network(
+  //               'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
+  //               fit: BoxFit.fill,
+  //               // height: MediaQuery.of(context).size.height * 2,
+  //               // width: double.infinity * 0.2,
+  //             )
+  //           : Image.file(img!),
+  //     ),
+  //   );
+  // }
 }
