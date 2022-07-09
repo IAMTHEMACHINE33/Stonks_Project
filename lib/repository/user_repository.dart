@@ -1,7 +1,7 @@
 import 'package:portfolio_management/api/user_api.dart';
 
 import '../models/user.dart';
-import '../response/load_user_response.dart';
+import '../response/user_response.dart';
 
 class UserRepository {
   Future<bool> register(User user) async {
@@ -12,7 +12,7 @@ class UserRepository {
     return UserApi().login(email, password);
   }
 
-  Future<LoadUserResponse?> loadUsers() async {
-    return UserApi().loadUsers();
+  Future<UserResponse> userInfo() async {
+    return UserApi().userInfo();
   }
 }

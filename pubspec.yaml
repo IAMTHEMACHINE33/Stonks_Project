@@ -45,6 +45,9 @@ dependencies:
   flutter_svg: ^1.1.0
   awesome_notifications: ^0.6.21
   google_maps_flutter: ^2.1.8
+  http_parser: ^4.0.1
+  http_services: ^2.1.1
+  json_annotation: ^4.5.0
   
 
 dev_dependencies:

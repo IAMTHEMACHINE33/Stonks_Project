@@ -190,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  disposable_object:
+    dependency: transitive
+    description:
+      name: disposable_object
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -314,12 +321,19 @@ packages:
     source: hosted
     version: "3.2.1"
   http_parser:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  http_services:
+    dependency: "direct main"
+    description:
+      name: http_services
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -382,7 +396,7 @@ packages:
     source: hosted
     version: "0.6.4"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
