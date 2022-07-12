@@ -6,7 +6,7 @@ class UserResponse {
   String? firstname;
   String? lastname;
   String? email;
-  String? age;
+  int? age;
   String? username;
 
   UserResponse(

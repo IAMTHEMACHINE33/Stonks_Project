@@ -10,7 +10,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
       email: json['email'] as String?,
-      age: json['age'] as String?,
+      age: json['age'] as int?,
       username: json['username'] as String?,
     );
 
