@@ -76,4 +76,8 @@ router.post("/user/login",(req,res)=>{
         })
     })
 })
+
+router.get("/user/dashboard",auth.userGuard,(req,res)=>{
+    res.json({firstname:req.userInfo.firstname,lastname:req.userInfo.lastname,username:req.userInfo.username,email:req.userInfo.email,age:req.userInfo.age})
+})
 module.exports = router;
