@@ -25,6 +25,20 @@ router.post("/blog/insert",auth.userGuard,upload.single("blog_img"),(req,res)=>{
     })
 })
 
+router.delete("/blog/delete/:blog_id",auth.userGuard,(req,res)=>{
+    Blog.deleteOne({_id:req.params.blog_id})
+    .then(()=>{
+        res.json({success:true,message:"delete"})
+    })
+    .catch((e)=>{
+        res.json({success:false,message:"error"})
+    })
+})
+
+router.put("/blog/update/:blog_id",auth.userGuard,(req,res)=>{
+    
+})
+
 
 
 module.exports = router;
