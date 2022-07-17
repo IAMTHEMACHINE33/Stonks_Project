@@ -9,4 +9,6 @@ app.use(userRouter);
 const blogRouter = require("./router/blogRouter");
 app.use(blogRouter);
 
+const stockRouter = require("./router/stockRouter");
+app.use(stockRouter);
 app.listen(90)

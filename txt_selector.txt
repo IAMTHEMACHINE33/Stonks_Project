@@ -1,0 +1,6 @@
+title = $('table[class="table table-striped       table-bordered      dataTable"] > tbody > tr > td > a').text()
+sector = $('table[class="table table-striped       table-bordered      dataTable"] > tbody > tr > td:nth-child(4)').text()
+ltp = $('table[class="table table-striped       table-bordered      dataTable"] > tbody > tr > td:nth-child(6)').text()
+rsi = $('table[class="table table-striped       table-bordered      dataTable"] > tbody > tr > td:nth-child(10)').text(
+macd = $('table[class="table table-striped       table-bordered      dataTable"] > tbody > tr > td:nth-child(11)').text()
+
