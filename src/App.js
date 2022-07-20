@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter} from 'react-router-dom';
-import Navbar from './component/Navbar';
-import Mid from './component/Mid';
+import Navbar from './Components/Navbar';
+import Mid from './Components/Mid';
 
 
 function App() {
