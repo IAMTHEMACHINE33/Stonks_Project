@@ -8,7 +8,7 @@ const multer = require("multer");
 const upload = require("../fileupload/fileupload")
 
 
-router.post("/user/insert",(req,res)=>{
+router.post("/user/insert",upload.single("user_img"),(req,res)=>{
 
     const email = req.body.email;
     User.findOne({email:email})
@@ -27,7 +27,7 @@ router.post("/user/insert",(req,res)=>{
 
         const email = req.body.email;
         const password = req.body.password;
-        const user_img = req.body.user_img;
+        const user_img = req.file.filename;
 
         bcryptjs.hash(password,10,(e, hased_pw)=>{
             const data = new User({
