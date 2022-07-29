@@ -48,6 +48,9 @@ dependencies:
   http_parser: ^4.0.1
   http_services: ^2.1.1
   json_annotation: ^4.5.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shake: ^2.1.0
   
 
 dev_dependencies:

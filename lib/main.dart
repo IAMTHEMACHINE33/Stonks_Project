@@ -7,6 +7,7 @@ import 'package:portfolio_management/screens/login_screen.dart';
 import 'package:portfolio_management/screens/my_information_screen.dart';
 import 'package:portfolio_management/screens/profile_screen.dart';
 import 'package:portfolio_management/screens/register_screen.dart';
+import 'package:shake/shake.dart';
 
 import 'screens/Display_screen.dart';
 
@@ -22,6 +23,13 @@ void main() {
         ledColor: Colors.white,
         channelShowBadge: true)
   ]);
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   ShakeDetector.autoStart(onPhoneShake: () {
+  //     Navigator.pushNamed(context, '/blog');
+  //   });
+  // }
 
   runApp(
     MaterialApp(

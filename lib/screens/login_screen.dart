@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:portfolio_management/repository/user_repository.dart';
 import 'package:portfolio_management/utils/show_message.dart';
+import 'package:portfolio_management/utils/url.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,6 +16,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isChecked = false;
+
+  int counter = 1;
+
+  late Box box1;
+
   _checkNotificationEnabled() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -22,16 +33,43 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final userToken = TextEditingController();
 
-  _navigateToScreen(bool isLogin) {
+  void createBox() async {
+    box1 = await Hive.openBox('login');
+    getData();
+  }
+
+  void getData() async {
+    if (box1.get("email") != null) {
+      _emailController.text = box1.get("email");
+    }
+    if (box1.get("token") != null) {
+      userToken.text = box1.get("token");
+    }
+    if (box1.get("password") != null) {
+      _passwordController.text = box1.get("password");
+
+      _login();
+    }
+  }
+
+  _navigateToScreen(bool isLogin) async {
     if (isLogin) {
+      // displaySuccessMessage(context, 'Login Success');
+      // await box1.put('email', _emailController.text);
+      // await box1.put('password', _passwordController.text);
+      // await box1.put('token', token);
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: 1,
               channelKey: 'basic_channel',
               title: 'Login Successful',
               body: 'This is to notify login success'));
-      Navigator.pushNamed(context, '/nav');
+      Timer(const Duration(seconds: 3), () {
+        Navigator.pushNamed(context, '/nav');
+      });
+      // Navigator.pushNamed(context, '/nav');
     } else {
       displayErrorMessage(context, 'Either username or password is incorrect');
     }
@@ -46,6 +84,15 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (isLogin) {
         _navigateToScreen(true);
+        // AwesomeNotifications().createNotification(
+        //     content: NotificationContent(
+        //         id: 1,
+        //         channelKey: 'basic_channel',
+        //         title: 'Login Successful',
+        //         body: 'Welcome User!'));
+        // setState(() {
+        //   counter++;
+        // });
       } else {
         _navigateToScreen(false);
       }
@@ -58,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     _checkNotificationEnabled();
     super.initState();
+    createBox();
   }
 
   @override
